@@ -16,8 +16,9 @@ const EMBEDDED_HELP_MESSAGE = new Discord.MessageEmbed().setTitle('SSV Goerli De
     .addField("+goerlieth help", 'Help with the bot.')
     .addField("+goerlieth mod", "Ping the admins for help if the **BOT** is malfunctioning (spamming this will result in a **BAN**)")
 
-bot.on('ready', async function() {
+bot.on('ready', async function (invite) {
   console.log('I am ready!');
+  console.log(bot.guilds)
 });
 
 bot.on('message', async function (message) {
@@ -79,7 +80,7 @@ bot.on('message', async function (message) {
       // Other commands
       case 'help': {
         console.log("help called");
-        const attachment = new Discord.MessageAttachment('./src/img.png', 'img.png');
+        const attachment = new Discord.MessageAttachment('./img.png', 'img.png');
         EMBEDDED_HELP_MESSAGE.attachFiles(attachment).setImage('attachment://img.png');
         await message.lineReply(EMBEDDED_HELP_MESSAGE);
         break;
