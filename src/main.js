@@ -80,7 +80,7 @@ bot.on('message', async function (message) {
       // Other commands
       case 'help': {
         console.log("help called");
-        const attachment = new Discord.MessageAttachment('./img.png', 'img.png');
+        const attachment = new Discord.MessageAttachment('./src/img.png', 'img.png');
         EMBEDDED_HELP_MESSAGE.attachFiles(attachment).setImage('attachment://img.png');
         await message.lineReply(EMBEDDED_HELP_MESSAGE);
         break;
