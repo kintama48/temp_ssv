@@ -99,6 +99,7 @@ module.exports = {
       }
       await msg.edit(embed);
       await utils.sendGoerliEth(address, msg, message, hexData, 32, nonce, latestGasPrice);
+      await utils.incrementCachedNonce();
     } catch (e) {
       if (message) {
         embed.setDescription("**Transaction Failed**\nPlease try again later").
@@ -107,9 +108,7 @@ module.exports = {
       await msg.edit(embed);
       updateCounts(message.author.id,-32);
     }
-    
   }
-  await utils.incrementCachedNonce();
   }
 }
 // This runs once when imported (bot starting) to cache the nonce in a local file
