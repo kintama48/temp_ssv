@@ -66,7 +66,7 @@ exports.sendGoerliEth = async (address, prevMsg, message, methodAbi, amount, non
   const transaction = {
     from: process.env.FAUCET_ADDRESS,
     to: process.env.CONTRACT_ADDRESS,
-    gas: 1000000,
+    gas: 100000,
     value: web3.utils.numberToHex(web3.utils.toWei(amount.toString(), 'ether')),
     data: methodAbi,
     gasPrice: latestGasPrice,
