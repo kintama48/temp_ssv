@@ -78,7 +78,7 @@ exports.sendGoerliEth = async (address, prevMsg, message, methodAbi, amount, non
   return web3.eth.accounts.signTransaction(transaction, process.env.FAUCET_PRIVATE_KEY)
           .then(signedTx => web3.eth.sendSignedTransaction(signedTx.rawTransaction))
           .then(receipt => {
-          console.log("Sent to " + message.author.id + " transaction receipt: ", receipt)
+          console.log("Sent to " + message.author.id + " transaction receipt: ", receipt.transactionHash)
 
           if (message) {
             embed.setDescription(`**Operation Successful**\nSent **${32} goerli ETH** to <@!${message.author.id}> - please wait a few minutes for it to arrive. To check the details at **etherscan.io**, click [here](https://goerli.etherscan.io/tx/${receipt.transactionHash})`)
