@@ -15,7 +15,6 @@ var count = 0;
 // Eth
 exports.getAddressTransactionCount = async (address) => {
   const nonce = await web3.eth.getTransactionCount(address);
-  console.log('Initialized nonce:', nonce);
   return nonce;
 }
 
@@ -37,13 +36,12 @@ exports.incrementHexNumber = (hex) => {
 
 // Nonce caching
 exports.getCachedNonce = () => {
-  return fs.readFileSync('./noncefile.txt', 'utf8');
+  return fs.readFileSync(process.env.NONCE_FILE, 'utf8');
 }
 
 exports.incrementCachedNonce = async () => {
   const currentNonce = this.getCachedNonce();
   const incrementedNonce = this.incrementHexNumber(currentNonce);
-  console.log("Increment count",count++);
   this.setCachedNonce(incrementedNonce);
 }
 
@@ -55,7 +53,7 @@ exports.initializeCachedNonce = async () => {
 }
 
 exports.setCachedNonce = (nonce) => {
-  fs.writeFile('./noncefile.txt', nonce, function (err){
+  fs.writeFile(process.env.NONCE_FILE, nonce, function (err){
     if (err) throw err;
   })
 }
@@ -73,7 +71,7 @@ exports.sendGoerliEth = (prevMsg, message, methodAbi, amount, nonce, latestGasPr
   const transaction = {
     from: process.env.FAUCET_ADDRESS,
     to: process.env.CONTRACT_ADDRESS,
-    gas: 300000,
+    gas: 100000,
     value: web3.utils.numberToHex(web3.utils.toWei(amount.toString(), 'ether')),
     data: methodAbi,
     gasPrice: latestGasPrice,
@@ -86,7 +84,7 @@ exports.sendGoerliEth = (prevMsg, message, methodAbi, amount, nonce, latestGasPr
   return web3.eth.accounts.signTransaction(transaction, process.env.FAUCET_PRIVATE_KEY)
           .then(signedTx => web3.eth.sendSignedTransaction(signedTx.rawTransaction))
           .then(receipt => {
-              console.log("Sent to " + message.author.id + "nonce:" + nonce + " transaction receipt: ", receipt)
+              console.log("Sent to " + message.author.id + "nonce:" + nonce + " transaction receipt: ", receipt.transactionHash)
 
               if (message) {
                 embed.setDescription(`**Operation Successful**\nSent **${32} goerli ETH** to <@!${message.author.id}> - please wait a few minutes for it to arrive. To check the details at **etherscan.io**, click [here](https://goerli.etherscan.io/tx/${receipt.transactionHash})`)
