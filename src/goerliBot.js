@@ -51,6 +51,8 @@ module.exports = {
             .setTimestamp().setColor(3447003);
         await message.lineReply(embed);
       }
+      return;
+    }
     if (receiverEligible === 401){
       //Daily of goerli recieved
       const m = `**Operation Unsuccessful**\n<@!${message.author.id}> has reached their daily quota of goerliETH.`;
@@ -62,8 +64,6 @@ module.exports = {
       }
       return;
     }
-    return;
-  }
 
     if (receiverEligible === 402){
       //Weekly quota of goerli reached
@@ -91,7 +91,7 @@ module.exports = {
   try {
     await utils.sendGoerliEth(msg, message, hexData, 32, nonce, latestGasPrice);
   } catch (e) {
-    console.log(e)
+    console.log("Stack reached goerli in errors.")
   }
   await utils.incrementCachedNonce();
   }
