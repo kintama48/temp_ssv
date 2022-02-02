@@ -36,7 +36,7 @@ exports.incrementHexNumber = (hex) => {
 
 // Nonce caching
 exports.getCachedNonce = () => {
-  return fs.readFileSync(process.env.NONCE_FILE, 'utf8');
+  return fs.readFileSync('./noncefile.txt', 'utf8');
 }
 
 exports.incrementCachedNonce = async () => {
@@ -53,7 +53,7 @@ exports.initializeCachedNonce = async () => {
 }
 
 exports.setCachedNonce = (nonce) => {
-  fs.writeFile(process.env.NONCE_FILE, nonce, function (err){
+  fs.writeFile('./noncefile.txt', nonce, function (err){
     if (err) throw err;
   })
 }
